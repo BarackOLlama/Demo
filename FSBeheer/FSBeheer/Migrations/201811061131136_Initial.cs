@@ -57,25 +57,50 @@ namespace FSBeheer.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Users",
+                "dbo.Inspections",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Roles",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Content = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Accounts",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Username = c.String(nullable: false),
+                        Password = c.String(),
+                        RoleId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.RoleId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.Questions", "QuestionTypeId", "dbo.QuestionTypes");
             DropForeignKey("dbo.Questions", "QuestionnaireId", "dbo.Questionnaires");
             DropForeignKey("dbo.Answers", "QuestionId", "dbo.Questions");
+            DropIndex("dbo.Accounts", new[] { "RoleId" });
             DropIndex("dbo.Questions", new[] { "QuestionnaireId" });
             DropIndex("dbo.Questions", new[] { "QuestionTypeId" });
             DropIndex("dbo.Answers", new[] { "QuestionId" });
-            DropTable("dbo.Users");
+            DropTable("dbo.Accounts");
+            DropTable("dbo.Roles");
+            DropTable("dbo.Inspections");
             DropTable("dbo.QuestionTypes");
             DropTable("dbo.Questionnaires");
             DropTable("dbo.Questions");

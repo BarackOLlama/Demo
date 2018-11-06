@@ -11,7 +11,7 @@ namespace FSBeheer
         public FSContext()
             : base("name=FSDB")
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<FSContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<FSContext, FSBeheer.Migrations.Configuration>());
         }
 
         public virtual DbSet<Answer> Answers { get; set; }
@@ -19,6 +19,8 @@ namespace FSBeheer
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
         public virtual DbSet<Account> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Inspection> Inspections { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

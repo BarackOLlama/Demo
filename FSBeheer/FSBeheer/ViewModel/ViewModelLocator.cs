@@ -52,6 +52,14 @@ namespace FSBeheer.ViewModel
                 return ServiceLocator.Current.GetInstance<HomeViewModel>();
             }
         }
+
+        public LiveChartDemoViewModel LiveChart
+        {
+            get
+            {
+                return new LiveChartDemoViewModel();
+            }
+        }
         
         public static void Cleanup()
         {

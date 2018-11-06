@@ -13,7 +13,7 @@ namespace FSBeheer.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201811051137275_Initial"; }
+            get { return "201811061131136_Initial"; }
         }
         
         string IMigrationMetadata.Source

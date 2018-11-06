@@ -7,16 +7,12 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Model
 {
-    public partial class Account
+    public class Inspection
     {
         [Key]
         public int Id { get; set; }
-
-        [Required]
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int RoleId { get; set; }
-        public Role Role { get; set; }
-
+        
+        public DateTime StartingTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }
