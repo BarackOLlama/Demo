@@ -1,34 +1,34 @@
+using FSBeheer.View;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FSBeheer.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class HomeViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
+        public ObservableCollection<QuestionVM> Questions { get; set; }
+
+        public RelayCommand ShowLiveChartCommand { get; set; }
+
+        private FSContext _Context;
+
         public HomeViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            ShowLiveChartCommand = new RelayCommand(ShowLiveChart);
+
+            _Context = new FSContext();
+
+            var questions = _Context.Questions
+                .ToList()
+                .Select(q => new QuestionVM(q));
+            Questions = new ObservableCollection<QuestionVM>(questions);
+        }
+
+        public void ShowLiveChart()
+        {
+            new LiveChartDemo().Show();
         }
     }
 }

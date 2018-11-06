@@ -7,13 +7,13 @@ namespace FSBeheer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UserToAccount : IMigrationMetadata
+    public sealed partial class ChangedInspection : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UserToAccount));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedInspection));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811051143086_UserToAccount"; }
+            get { return "201811061139490_ChangedInspection"; }
         }
         
         string IMigrationMetadata.Source
