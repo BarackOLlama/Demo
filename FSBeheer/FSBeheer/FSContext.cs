@@ -22,6 +22,7 @@ namespace FSBeheer
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Inspection> Inspections { get; set; }
         public virtual DbSet<Inspector> Inspectors { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
