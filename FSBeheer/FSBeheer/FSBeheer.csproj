@@ -88,14 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\201811061131136_Initial.cs" />
-    <Compile Include="Migrations\201811061131136_Initial.Designer.cs">
-      <DependentUpon>201811061131136_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811061139490_ChangedInspection.cs" />
-    <Compile Include="Migrations\201811061139490_ChangedInspection.Designer.cs">
-      <DependentUpon>201811061139490_ChangedInspection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
@@ -145,12 +137,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201811061131136_Initial.resx">
-      <DependentUpon>201811061131136_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811061139490_ChangedInspection.resx">
-      <DependentUpon>201811061139490_ChangedInspection.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

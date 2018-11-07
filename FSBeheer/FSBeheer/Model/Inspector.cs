@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace FSBeheer.Model
         public DateTime CertificationDate { get; set; }
         public DateTime InvalidDate { get; set; }
         public string BankNumber { get; set; }
+        
+        public int AccountId { get; set; }
+        public Account Account { get; set; }
 
     }
 }

@@ -27,10 +27,8 @@ namespace FSBeheer.ViewModel
 
             _Context = new FSContext();
 
-            var questions = _Context.Questions
-                .ToList()
-                .Select(q => new QuestionVM(q));
-            Questions = new ObservableCollection<QuestionVM>(questions);
+            var roles = _Context.Roles
+                .ToList();
         }
 
         public void ShowPieChart()
