@@ -19,5 +19,10 @@ namespace FSBeheer.Model
         public int QuestionId { get; set; }
 
         public virtual Question Question { get; set; }
+
+        [Required]
+        public int InspectorId { get; set; }
+
+        public virtual Inspector Inspector { get; set; }
     }
 }
