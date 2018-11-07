@@ -57,7 +57,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new LiveChartDemoViewModel();
+                return new LiveChartDemoViewModel(Home.SelectedQuestion, Home.ChartType);
             }
         }
         

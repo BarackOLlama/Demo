@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         Title="Home" Height="450" Width="800"
@@ -17,12 +18,22 @@
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Content="LiveChart"
-                        Command="{Binding ShowLiveChartCommand}"
+                <Button Content="Pie Chart"
+                        Command="{Binding ShowPieChartCommand}"
+                        Template="{StaticResource MainButtonTemplate}"/>
+                <Button Content="Bar Chart"
+                        Command="{Binding ShowBarChartCommand}"
                         Template="{StaticResource MainButtonTemplate}"/>
             </StackPanel>
             <StackPanel Margin="50,20">
-                <DataGrid ItemsSource="{Binding Questions}"></DataGrid>
+                <DataGrid ItemsSource="{Binding Questions}"
+                          SelectedItem="{Binding SelectedQuestion}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
             </StackPanel>
         </StackPanel>
     </Grid>

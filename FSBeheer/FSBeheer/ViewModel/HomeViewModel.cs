@@ -10,13 +10,20 @@ namespace FSBeheer.ViewModel
     {
         public ObservableCollection<QuestionVM> Questions { get; set; }
 
-        public RelayCommand ShowLiveChartCommand { get; set; }
+        public QuestionVM SelectedQuestion { get; set; }
+        public string ChartType { get; set; }
+
+        public RelayCommand ShowPieChartCommand { get; set; }
+        public RelayCommand ShowBarChartCommand { get; set; }
+        public RelayCommand CanExecuteChangedCommand { get; set; }
 
         private FSContext _Context;
 
         public HomeViewModel()
         {
-            ShowLiveChartCommand = new RelayCommand(ShowLiveChart);
+            ShowPieChartCommand = new RelayCommand(ShowPieChart, CanExecute);
+            ShowBarChartCommand = new RelayCommand(ShowBarChart, CanExecute);
+            CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
 
             _Context = new FSContext();
 
@@ -26,9 +33,27 @@ namespace FSBeheer.ViewModel
             Questions = new ObservableCollection<QuestionVM>(questions);
         }
 
-        public void ShowLiveChart()
+        public void ShowPieChart()
         {
+            ChartType = "Pie";
             new LiveChartDemo().Show();
+        }
+
+        public void ShowBarChart()
+        {
+            ChartType = "Bar";
+            new LiveChartDemo().Show();
+        }
+
+        public bool CanExecute()
+        {
+            return SelectedQuestion != null;
+        }
+
+        public void CanExecuteChanged()
+        {
+            ShowPieChartCommand.RaiseCanExecuteChanged();
+            ShowBarChartCommand.RaiseCanExecuteChanged();
         }
     }
 }

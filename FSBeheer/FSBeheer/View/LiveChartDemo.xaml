@@ -10,7 +10,15 @@
       Title="LiveChartDemo"
       DataContext="{Binding LiveChart, Source={StaticResource Locator}}">
 
+    <Window.Resources>
+        <local:NullVisibilityConverter x:Key="NullToVisibility"/>
+    </Window.Resources>
     <Grid>
-        <lvc:PieChart Series="{Binding SeriesCollection}"></lvc:PieChart>
+        <StackPanel Visibility="{Binding PieChart, Converter={StaticResource NullToVisibility}}">
+            <lvc:PieChart></lvc:PieChart>
+        </StackPanel>
+        <StackPanel Visibility="{Binding BarChart, Converter={StaticResource NullToVisibility}}">
+            <lvc:CartesianChart></lvc:CartesianChart>
+        </StackPanel>
     </Grid>
 </Window>
