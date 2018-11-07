@@ -8,12 +8,14 @@ namespace FSBeheer.Model
 {
     public partial class Answer
     {
+        [Key]
         public int Id { get; set; }
 
         [Column(TypeName = "ntext")]
         [Required]
         public string Content { get; set; }
-
+        
+        [Required]
         public int QuestionId { get; set; }
 
         public virtual Question Question { get; set; }
