@@ -2,11 +2,11 @@ namespace FSBeheer.Migrations
 {
     using FSBeheer.Model;
     using System;
-    using System.Data.Entity;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FSBeheer.FSContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<FSContext>
     {
         public Configuration()
         {
@@ -14,78 +14,67 @@ namespace FSBeheer.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(FSBeheer.FSContext context)
+        protected override void Seed(FSContext context)
         {
             context.Answers.RemoveRange(context.Answers);
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Answers', RESEED, 1)");
             context.Questions.RemoveRange(context.Questions);
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Questions', RESEED, 1)");
             context.QuestionTypes.RemoveRange(context.QuestionTypes);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.QuestionTypes', RESEED, 0)");
             context.Questionnaires.RemoveRange(context.Questionnaires);
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Questionnaires', RESEED, 1)");
             context.Inspections.RemoveRange(context.Inspections);
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Inspections', RESEED, 1)");
             context.Inspectors.RemoveRange(context.Inspectors);
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Inspectors', RESEED, 1)");
             context.Accounts.RemoveRange(context.Accounts);
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Accounts', RESEED, 0)");
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
 
-            context.SaveChanges();
-
-            foreach(Role r in context.Roles)
+            var roles = new List<Role>
             {
-                System.Diagnostics.Debug.WriteLine("MSG: " + r.Content);
-            }
-
-
-            context.Roles.AddOrUpdate(
                 new Role() { Content = "Salesmedewerker" },
                 new Role() { Content = "Operationele medewerker" },
                 new Role() { Content = "Inspecteur" }
-            );
+            };
+            context.Roles.AddRange(roles);
 
-            context.QuestionTypes.AddOrUpdate(
+            var questiontypes = new List<QuestionType>
+            {
                 new QuestionType() { Name = "Open vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
                 new QuestionType() { Name = "Multiple Choice Tabelvraag" }
-            );
+            };
+            context.QuestionTypes.AddRange(questiontypes);
 
-            context.SaveChanges();
-
-            context.Accounts.AddOrUpdate(
+            var accounts = new List<Account>
+            {
                 new Account()
                 {
                     Username = "bkoevoets@gmail.com",
                     Password = "bartswachtwoord",
-                    RoleId = 3
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
                 },
                 new Account()
                 {
-                    Username = "vnguyen@gmail.com",
+                    Username = "pnguyen@gmail.com",
                     Password = "phiswachtwoord",
-                    RoleId = 3
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
                 },
                 new Account()
                 {
                     Username = "clancaster@gmail.com",
                     Password = "cjswachtwoord",
-                    RoleId = 3
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
                 },
                 new Account()
                 {
                     Username = "earends@gmail.com",
                     Password = "evertswachtwoord",
-                    RoleId = 3
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
                 }
-            );
+            };
+            context.Accounts.AddRange(accounts);
 
-            context.SaveChanges();
-
-            context.Inspectors.AddOrUpdate(
+            var inspectors = new List<Inspector>
+            {
                 new Inspector()
                 {
                     Name = "Bart Koevoets",
@@ -97,7 +86,7 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    AccountId = 1
+                    Account = accounts[0]
                 },
                 new Inspector()
                 {
@@ -110,7 +99,7 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    AccountId = 2
+                    Account = accounts[1]
                 },
                 new Inspector()
                 {
@@ -123,7 +112,7 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    AccountId = 3
+                    Account = accounts[2]
                 },
                 new Inspector()
                 {
@@ -136,160 +125,168 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    AccountId = 4
+                    Account = accounts[3]
                 }
-            );
+            };
+            context.Inspectors.AddRange(inspectors);
 
-            context.Inspections.AddOrUpdate(
+            var inspections = new List<Inspection>
+            {
                 new Inspection()
-                {
-                    State = "Ingepland",
-                    Notes = "Minstens 4 inspecteurs"
-                }
-            );
+                    {
+                        Name = "EersteInspectie",
+                        State = "Ingepland",
+                        Notes = "Minstens 4 inspecteurs"
+                    }
+            };
+            context.Inspections.AddRange(inspections);
 
-            context.Questionnaires.AddOrUpdate(
+            var questionnaires = new List<Questionnaire>
+            {
                 new Questionnaire()
                 {
                     Name = "VragenlijstEersteInspectie",
                     Instructions = "Laat geen vragen leeg",
                     Version = 1,
                     Comments = "Dit is onze eerste inspectie, extra goed opletten!",
-                    InspectionId = 1
+                    Inspection = inspections[0]
                 }
-            );
+            };
+            context.Questionnaires.AddRange(questionnaires);
 
-            context.Questions.AddOrUpdate(
+            var questions = new List<Question>
+            {
                 new Question()
                 {
                     Content = "Hoeveel man is er op het festival?",
-                    Options = "100; 200; 500; 1000",
-                    QuestionnaireId = 1,
-                    QuestionTypeId = 2
+                    Options = "A|100;B|200;C|500;D|1000",
+                    Questionnaire = questionnaires[0],
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
                 },
                 new Question()
                 {
                     Content = "Hoe groot is het percentage van roest op het podium?",
-                    Options = "10%; 20%; 50%; 100%",
-                    QuestionnaireId = 1,
-                    QuestionTypeId = 2
+                    Options = "A|10%;B|20%;C|50%;D|100%",
+                    Questionnaire = questionnaires[0],
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
                 },
                 new Question()
                 {
                     Content = "Wat is de draaglast van de fundament van het podium?",
-                    Options = "100kg; 200kg; 500kg; 1000kg",
-                    QuestionnaireId = 1,
-                    QuestionTypeId = 2
+                    Options = "A|100kg;B|200kg;C|500kg;D|1000kg",
+                    Questionnaire = questionnaires[0],
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
                 },
                 new Question()
                 {
                     Content = "Hoeveel bars zijn er op het festival?",
-                    Options = "5; 10; 20; 40",
-                    QuestionnaireId = 1,
-                    QuestionTypeId = 2
+                    Options = "A|5;B|10;C|20;D|40",
+                    Questionnaire = questionnaires[0],
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
                 }
-            );
+            };
+            context.Questions.AddRange(questions);
 
-            context.Answers.AddOrUpdate(
+            var answers = new List<Answer>
+            {
                 new Answer()
                 {
-                    Content = "200",
-                    QuestionId = 1,
-                    InspectorId = 1
+                    Content = "B|200",
+                    Question = questions[0],
+                    Inspector = inspectors[0]
                 },
                 new Answer()
                 {
-                    Content = "100",
-                    QuestionId = 1,
-                    InspectorId = 2
+                    Content = "A|100",
+                    Question = questions[0],
+                    Inspector = inspectors[1]
                 },
                 new Answer()
                 {
-                    Content = "200",
-                    QuestionId = 1,
-                    InspectorId = 3
+                    Content = "B|200",
+                    Question = questions[0],
+                    Inspector = inspectors[2]
                 },
                 new Answer()
                 {
-                    Content = "500",
-                    QuestionId = 1,
-                    InspectorId = 4
+                    Content = "C|500",
+                    Question = questions[0],
+                    Inspector = inspectors[3]
                 },
                 new Answer()
                 {
-                    Content = "10%",
-                    QuestionId = 2,
-                    InspectorId = 1
+                    Content = "A|10%",
+                    Question = questions[1],
+                    Inspector = inspectors[0]
                 },
                 new Answer()
                 {
-                    Content = "10%",
-                    QuestionId = 2,
-                    InspectorId = 2
+                    Content = "A|10%",
+                    Question = questions[1],
+                    Inspector = inspectors[1]
                 },
                 new Answer()
                 {
-                    Content = "10%",
-                    QuestionId = 2,
-                    InspectorId = 3
+                    Content = "A|10%",
+                    Question = questions[1],
+                    Inspector = inspectors[2]
                 },
                 new Answer()
                 {
-                    Content = "20%",
-                    QuestionId = 2,
-                    InspectorId = 4
+                    Content = "B|20%",
+                    Question = questions[1],
+                    Inspector = inspectors[3]
                 },
                 new Answer()
                 {
-                    Content = "200kg",
-                    QuestionId = 3,
-                    InspectorId = 1
+                    Content = "B|200kg",
+                    Question = questions[2],
+                    Inspector = inspectors[0]
                 },
                 new Answer()
                 {
-                    Content = "200kg",
-                    QuestionId = 3,
-                    InspectorId = 2
+                    Content = "B|200kg",
+                    Question = questions[2],
+                    Inspector = inspectors[1]
                 },
                 new Answer()
                 {
-                    Content = "200kg",
-                    QuestionId = 3,
-                    InspectorId = 3
+                    Content = "B|200kg",
+                    Question = questions[2],
+                    Inspector = inspectors[2]
                 },
                 new Answer()
                 {
-                    Content = "200kg",
-                    QuestionId = 3,
-                    InspectorId = 4
+                    Content = "B|200kg",
+                    Question = questions[2],
+                    Inspector = inspectors[3]
                 },
                 new Answer()
                 {
-                    Content = "20",
-                    QuestionId = 4,
-                    InspectorId = 1
+                    Content = "C|20",
+                    Question = questions[3],
+                    Inspector = inspectors[0]
                 },
                 new Answer()
                 {
-                    Content = "10",
-                    QuestionId = 4,
-                    InspectorId = 2
+                    Content = "B|10",
+                    Question = questions[3],
+                    Inspector = inspectors[1]
                 },
                 new Answer()
                 {
-                    Content = "40",
-                    QuestionId = 4,
-                    InspectorId = 3
+                    Content = "D|40",
+                    Question = questions[3],
+                    Inspector = inspectors[2]
                 },
                 new Answer()
                 {
-                    Content = "20",
-                    QuestionId = 4,
-                    InspectorId = 4
+                    Content = "C|20",
+                    Question = questions[3],
+                    Inspector = inspectors[3]
                 }
-            );
-
-            context.SaveChanges();
+            };
+            context.Answers.AddRange(answers);
         }
     }
 }

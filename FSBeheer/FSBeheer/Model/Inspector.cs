@@ -24,8 +24,8 @@ namespace FSBeheer.Model
         public DateTime InvalidDate { get; set; }
         public string BankNumber { get; set; }
         
-        public int AccountId { get; set; }
-        public Account Account { get; set; }
+        public int? AccountId { get; set; }
+        public virtual Account Account { get; set; }
 
     }
 }

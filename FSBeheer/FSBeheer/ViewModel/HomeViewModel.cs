@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FSBeheer.ViewModel
 {
-    public class HomeViewModel : ViewModelBase
+    public class HomeViewModel : BaseViewModel
     {
         public ObservableCollection<QuestionVM> Questions { get; set; }
 
@@ -17,8 +17,6 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowBarChartCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
 
-        private FSContext _Context;
-
         public HomeViewModel()
         {
             ShowPieChartCommand = new RelayCommand(ShowPieChart, CanExecute);
@@ -27,8 +25,8 @@ namespace FSBeheer.ViewModel
 
             _Context = new FSContext();
 
-            var roles = _Context.Roles
-                .ToList();
+            var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
+            Questions = new ObservableCollection<QuestionVM>(questions);
         }
 
         public void ShowPieChart()

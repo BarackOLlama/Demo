@@ -16,26 +16,16 @@ namespace FSBeheer.Model
         }
 
         public int Id { get; set; }
-
         [Column(TypeName = "ntext")]
         [Required]
         public string Content { get; set; }
-
         public string Comments { get; set; }
-
         public string Options { get; set; }
-
         public string Columns { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<Answer> Answers { get; set; }
-        
+        public virtual ObservableCollection<Answer> Answers { get; set; }        
         public int QuestionnaireId { get; set; }
-
-        public virtual Questionnaire Questionnaire { get; set; }
-        
-        public int QuestionTypeId { get; set; }
-
+        public virtual Questionnaire Questionnaire { get; set; }        
+        public int? QuestionTypeId { get; set; }
         public virtual QuestionType QuestionType { get; set; }
     }
 }

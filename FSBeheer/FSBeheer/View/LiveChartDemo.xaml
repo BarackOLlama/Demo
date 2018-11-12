@@ -13,12 +13,18 @@
     <Window.Resources>
         <local:NullVisibilityConverter x:Key="NullToVisibility"/>
     </Window.Resources>
-    <Grid>
+    <StackPanel>
         <StackPanel Visibility="{Binding PieChart, Converter={StaticResource NullToVisibility}}">
-            <lvc:PieChart></lvc:PieChart>
+            <lvc:PieChart MinHeight="300" Series="{Binding PieChart.Series}"></lvc:PieChart>
         </StackPanel>
         <StackPanel Visibility="{Binding BarChart, Converter={StaticResource NullToVisibility}}">
-            <lvc:CartesianChart></lvc:CartesianChart>
+            <lvc:CartesianChart MinHeight="300" Series="{Binding BarChart.Series}"
+                                AxisX="{Binding BarChart.AxisX}"
+                                AxisY="{Binding BarChart.AxisY}">
+            </lvc:CartesianChart>
         </StackPanel>
-    </Grid>
+        <StackPanel>
+            <DataGrid ItemsSource="{Binding Answers}"></DataGrid>
+        </StackPanel>
+    </StackPanel>
 </Window>

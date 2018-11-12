@@ -7,10 +7,13 @@ namespace FSBeheer.Model
     {
         [Key]
         public int Id { get; set; }
+        [StringLength(32)]
+        [Index(IsUnique =true)]
         public string Username { get; set; }
+        [StringLength(64)]
         public string Password { get; set; }
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
     }
 }

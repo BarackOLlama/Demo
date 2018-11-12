@@ -16,6 +16,11 @@ namespace FSBeheer.ViewModel
             _question = q;
         }
 
+        public int Id
+        {
+            get { return _question.Id; }
+        }
+
         public string Content
         {
             get { return _question.Content; }
@@ -31,9 +36,9 @@ namespace FSBeheer.ViewModel
             get { return _question.Columns; }
         }
 
-        public QuestionType Type
+        public string Type
         {
-            get { return _question.QuestionType; }
+            get { return _question.QuestionType.Name; }
         }
     }
 }

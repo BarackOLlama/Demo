@@ -16,19 +16,11 @@ namespace FSBeheer.Model
         }
 
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string Instructions { get; set; }
-
         public int Version { get; set; }
-
-        public string Comments { get; set; }
-        
-        public int InspectionId { get; set; }
-
-        public virtual Inspection Inspection { get; set; }
-        
-        public virtual ObservableCollection<Question> Questions { get; set; }
-    }
+        public string Comments { get; set; }        
+        public int? InspectionId { get; set; }
+        public virtual Inspection Inspection { get; set; }        
+        public virtual ObservableCollection<Question> Questions { get; set; }    }
 }

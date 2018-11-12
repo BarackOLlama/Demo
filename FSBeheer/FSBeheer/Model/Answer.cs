@@ -10,19 +10,12 @@ namespace FSBeheer.Model
     {
         [Key]
         public int Id { get; set; }
-
         [Column(TypeName = "ntext")]
         [Required]
         public string Content { get; set; }
-        
-        [Required]
-        public int QuestionId { get; set; }
-
+        public int? QuestionId { get; set; }
         public virtual Question Question { get; set; }
-
-        [Required]
-        public int InspectorId { get; set; }
-
+        public int? InspectorId { get; set; }
         public virtual Inspector Inspector { get; set; }
     }
 }
