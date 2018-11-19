@@ -37,5 +37,7 @@ namespace FSBeheer.ViewModel
         {
             get { return _answer.Content.Split('|')[0]; }
         }
+
+        
     }
 }
